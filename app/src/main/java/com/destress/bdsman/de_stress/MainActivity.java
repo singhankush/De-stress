@@ -5,42 +5,40 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
-import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
+import android.os.Bundle;
+import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
-    //View Defined for storing image
+    private HorizontalScrollView mScrollView;
     private SurfaceView mSnapView;
     private SurfaceHolder mHolder;
-
-    //Camera to capture Snaps
     private Camera mCamera;
     private ImageButton mCaptureButton;
-
-    public static Camera getCameraInstance(){
-        Camera c = null;
-        try{
-            c = Camera.open();
-        }catch (Exception e){
-
-        }
-        return c;
-    }
-
+    private ImageButton mSwtichButton;
+    public int currentCameraId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-
+        mScrollView = findViewById(R.id.scroll_view);
         mSnapView = findViewById(R.id.snap_view);
         mHolder = mSnapView.getHolder();
         mCaptureButton = findViewById(R.id.capture_button);
+        mSwtichButton = findViewById(R.id.switch_camera_button);
+//        mImageView = findViewById(R.id.image_view);
 
         if(checkCameraHardware()){
             mCamera = getCameraInstance();
@@ -112,15 +110,25 @@ public class MainActivity extends AppCompatActivity {
                 });
 
             }
-        }else {
-            Toast.makeText(this, "NO CAMERA DETECTED!", Toast.LENGTH_LONG).show();
+        }else{
+            Toast.makeText(this,"NO CAMERA DETECTED!",Toast.LENGTH_LONG).show();
         }
     }
 
     private boolean checkCameraHardware(){
-        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
+        if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) return true;
+        return false;
     }
 
+    public static Camera getCameraInstance(){
+        Camera c = null;
+        try{
+            c = Camera.open();
+        }catch (Exception e){
+
+        }
+        return c;
+    }
     private Bitmap getRotatedBitmap(Bitmap bitmap){
         Matrix matrix = new Matrix();
         matrix.postRotate(90);
