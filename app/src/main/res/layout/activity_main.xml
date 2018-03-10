@@ -4,35 +4,55 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_light"
     tools:context="com.destress.bdsman.de_stress.MainActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <SurfaceView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/snap_view"
+            android:id="@+id/camera_preview"
             android:layout_alignParentTop="true"
             android:layout_above="@+id/scroll_view"
             android:padding="@dimen/padding">
-            <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/gridview"
+            <SurfaceView
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:columnWidth="90dp"
-                android:numColumns="auto_fit"
-                android:verticalSpacing="10dp"
-                android:horizontalSpacing="10dp"
-                android:stretchMode="columnWidth"
-                android:gravity="center"
-                />
-            <ImageView
-                android:id="@+id/snap_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Click Snap"/>
-        </SurfaceView>
+                android:layout_height="0dp"
+                android:id="@+id/snap_view"
+                android:layout_alignParentTop="true"
+                android:layout_above="@+id/scroll_view"
+                android:padding="@dimen/padding">
+                <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:id="@+id/gridview"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:columnWidth="90dp"
+                    android:numColumns="auto_fit"
+                    android:verticalSpacing="10dp"
+                    android:horizontalSpacing="10dp"
+                    android:stretchMode="columnWidth"
+                    android:gravity="center"
+                    />
+                <ImageView
+                    android:id="@+id/snap_image"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Click Snap"/>
+            </SurfaceView>
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/capture_button"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
+                android:layout_gravity="bottom|center_horizontal"
+                android:alpha="0.7"
+                app:backgroundTint="@android:color/white"
+                app:rippleColor="@color/colorAccent"
+                app:elevation="@dimen/elevation"
+                app:useCompatPadding="true" />
+        </FrameLayout>
         <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -45,46 +65,16 @@
                 android:layout_height="wrap_content"
                 android:gravity="center">
 
-                <ImageButton
+                <android.support.design.widget.FloatingActionButton
                     android:id="@+id/button1"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:padding="@dimen/padding"
-                    android:adjustViewBounds="true"
-                    android:background="@null"
-                    android:elevation="@dimen/padding"
+                    app:useCompatPadding="true"
+                    app:elevation="@dimen/elevation"
+                    app:backgroundTint="@android:color/white"
                     android:scaleType="centerInside"
-                    android:src="@drawable/Mayuri_Shiina" />
-                <ImageButton
-                    android:id="@+id/button2"
-                    android:layout_width="@dimen/button_size"
-                    android:layout_height="@dimen/button_size"
-                    android:padding="@dimen/padding"
                     android:adjustViewBounds="true"
-                    android:background="@null"
-                    android:elevation="@dimen/padding"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/Mayuri_Shiina" />
-                <ImageButton
-                    android:id="@+id/button3"
-                    android:layout_width="@dimen/button_size"
-                    android:layout_height="@dimen/button_size"
-                    android:padding="@dimen/padding"
-                    android:adjustViewBounds="true"
-                    android:background="@null"
-                    android:elevation="@dimen/padding"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/Mayuri_Shiina" />
-                <ImageButton
-                    android:id="@+id/button4"
-                    android:layout_width="@dimen/button_size"
-                    android:layout_height="@dimen/button_size"
-                    android:padding="@dimen/padding"
-                    android:adjustViewBounds="true"
-                    android:background="@null"
-                    android:elevation="@dimen/padding"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/Mayuri_Shiina" />
+                    android:src="@drawable/mayuri_shiina" />
             </LinearLayout>
         </HorizontalScrollView>
     </RelativeLayout>
