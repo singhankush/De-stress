@@ -14,10 +14,14 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.VideoView;
 
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
+
+import de.hdodenhof.circleimageview.CircleImageView;
 
 /**
  * Created by vipul on 10-03-2018.
@@ -42,6 +46,11 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
     private int defaultAudioId;
     //End of Variable for Audio Player
 
+    //Moves Variables
+    private CircleImageView firstMove,
+            secondMove, thirdMove,
+            fourthMove;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -52,7 +61,7 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
         //Audio Player Work Started
         audioPlayer = new MediaPlayer();
         defaultAudioId = R.raw.owms; //default mp3 audio.
-        audioUri = getAudioUri(defaultAudioId);
+        audioUri = convertIdToUri(defaultAudioId);
         try {
             //default audio Player file set.
             audioPlayer.setDataSource(getApplicationContext(), audioUri);
@@ -65,19 +74,104 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
         //Start of Animation Default Declaration
         snapImage = findViewById(R.id.snap_image);
         snapImageShakeAnimation = AnimationUtils.loadAnimation(this, R.anim.shake);
-        snapImage.setOnClickListener(new View.OnClickListener() {
+
+        firstMove = findViewById(R.id.button1);
+        secondMove = findViewById(R.id.button2);
+        thirdMove = findViewById(R.id.button3);
+        fourthMove = findViewById(R.id.button4);
+
+        firstMove.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View view) {
-                snapImage.startAnimation(snapImageShakeAnimation);
-                audioPlayer.start();
-                crack();
-            }
+            public void onClick(View v){
+                findViewById(R.id.crack).setVisibility(View.INVISIBLE);
+                VideoView videoview = (VideoView) findViewById(R.id.move_video);
+                videoview.setVisibility(View.VISIBLE);
+                Uri uri = convertIdToUri(R.raw.scene_explosion);
+                videoview.setVideoURI(uri);
+                videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        snapImage.setVisibility(View.VISIBLE);
+                        snapImage.startAnimation(snapImageShakeAnimation);
+                        audioPlayer.start();
+                        crack();
+                    }
+                });
+                videoview.start();
+                snapImage.setVisibility(View.INVISIBLE);
+            };
+        });
+
+        secondMove.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                findViewById(R.id.crack).setVisibility(View.INVISIBLE);
+                VideoView videoview = (VideoView) findViewById(R.id.move_video);
+                videoview.setVisibility(View.VISIBLE);
+                Uri uri = convertIdToUri(R.raw.scene_kamehameha);
+                videoview.setVideoURI(uri);
+                videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        snapImage.setVisibility(View.VISIBLE);
+                        snapImage.startAnimation(snapImageShakeAnimation);
+                        audioPlayer.start();
+                        crack();
+                    }
+                });
+                videoview.start();
+                snapImage.setVisibility(View.INVISIBLE);
+            };
+        });
+
+        thirdMove.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                findViewById(R.id.crack).setVisibility(View.INVISIBLE);
+                VideoView videoview = (VideoView) findViewById(R.id.move_video);
+                videoview.setVisibility(View.VISIBLE);
+                Uri uri = convertIdToUri(R.raw.scene_explosion);
+                videoview.setVideoURI(uri);
+                videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        snapImage.setVisibility(View.VISIBLE);
+                        snapImage.startAnimation(snapImageShakeAnimation);
+                        audioPlayer.start();
+                        crack();
+                    }
+                });
+                videoview.start();
+                snapImage.setVisibility(View.INVISIBLE);
+            };
+        });
+
+        fourthMove.setOnClickListener(new View.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                findViewById(R.id.crack).setVisibility(View.INVISIBLE);
+                VideoView videoview = (VideoView) findViewById(R.id.move_video);
+                videoview.setVisibility(View.VISIBLE);
+                Uri uri = convertIdToUri(R.raw.scene_explosion);
+                videoview.setVideoURI(uri);
+                videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                    @Override
+                    public void onCompletion(MediaPlayer mediaPlayer) {
+                        snapImage.setVisibility(View.VISIBLE);
+                        snapImage.startAnimation(snapImageShakeAnimation);
+                        audioPlayer.start();
+                        crack();
+                    }
+                });
+                videoview.start();
+                snapImage.setVisibility(View.INVISIBLE);
+            };
         });
         //End of Animation Default Declaration
     }
 
     //Converts Raw data id to Uri for Audio Player
-    public Uri getAudioUri(int id){
+    public Uri convertIdToUri(int id){
         return Uri.parse("android.resource://" + PACKAGE_NAME + "/" + id);
     }
 
@@ -163,7 +257,7 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
 
     private void visualFX(){
         //Set background with broken glass image
-        findViewById(R.id.background).setBackgroundResource(R.drawable.crack);
+        findViewById(R.id.crack).setVisibility(View.VISIBLE);
     }
     private void vibrateFX(){
         //Create vibrator object
