@@ -1,11 +1,13 @@
 package com.destress.bdsman.de_stress;
 
 import android.content.Context;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
+import android.media.Image;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -25,19 +27,27 @@ import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
 import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
 
 public class MainActivity extends AppCompatActivity {
+    private static final int STATE_READY=1;
+    private static final int STATE_FROZEN=0;
 
-    private HorizontalScrollView mScrollView;
     private SurfaceView mSnapView;
     private SurfaceHolder mHolder;
     private Camera mCamera;
     private ImageButton mCaptureButton;
-    private ImageButton mSwtichButton;
+    private ImageButton mSwitchButton;
+    private ImageButton mAcceptButton;
+    private ImageButton mDeclineButton;
+    public Bitmap capturedImage;
+    public int state=STATE_READY;
+    public SurfaceHolder.Callback mHolderCallback;
+    public Camera.PictureCallback mCameraCallback;
     public View bottomPane1, bottomPane2;
     public int currentCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
     @Override
@@ -45,66 +55,30 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
-        mScrollView = findViewById(R.id.scroll_view);
         mSnapView = findViewById(R.id.snap_view);
         mHolder = mSnapView.getHolder();
         mCaptureButton = findViewById(R.id.capture_button);
-        mSwtichButton = findViewById(R.id.switch_camera_button);
-//        bottomPane1 = findViewById(R.id.)
-        final Camera.PictureCallback callback = new Camera.PictureCallback() {
+        mSwitchButton = findViewById(R.id.switch_camera_button);
+        mAcceptButton = findViewById(R.id.accept_button);
+        mDeclineButton = findViewById(R.id.decline_button);
+        bottomPane1 = findViewById(R.id.bottom_pane1);
+        bottomPane2 = findViewById(R.id.bottom_pane2);
+        mCameraCallback = new Camera.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] bytes, Camera camera) {
-                Bitmap bitmap = getRotatedBitmap(BitmapFactory.decodeByteArray(bytes, 0 ,bytes.length));
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bitmap.compress(Bitmap.CompressFormat.PNG,0,baos);
-                File file = getOutputMediaFile();
-                if(file == null) return;
-                try{
-                    FileOutputStream fos = new FileOutputStream(file);
-                    fos.write(baos.toByteArray());
-                    fos.close();
-                } catch (java.io.IOException e) {
-                    e.printStackTrace();
-                }
-            }
-            private File getOutputMediaFile(){
-                File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "De_stress");
-                if(!dir.exists()){
-                    if(!dir.mkdirs()) {
-                        return null;
-                    }
-                }
-                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                return new File(dir + File.separator + "IMG_" + timeStamp + ".png");
+                capturedImage = getRotatedBitmap(BitmapFactory.decodeByteArray(bytes, 0, bytes.length));
             }
         };
-        mHolder.addCallback(new SurfaceHolder.Callback() {
+        mHolderCallback = new SurfaceHolder.Callback() {
             @Override
             public void surfaceCreated(SurfaceHolder surfaceHolder) {
-                try {
-                    mCamera.setPreviewDisplay(surfaceHolder);
-                    mCamera.setDisplayOrientation(90);
-                    mCamera.startPreview();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
+                setupCamera();
             }
 
             @Override
             public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
                 if(mHolder.getSurface() == null) return;
-                try {
-                    mCamera.stopPreview();
-                }catch (Exception e){
-                    e.printStackTrace();
-                }
-                try {
-                    mCamera.setPreviewDisplay(mHolder);
-                    mCamera.setDisplayOrientation(90);
-                    mCamera.startPreview();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
+                setupCamera();
             }
 
             @Override
@@ -113,31 +87,31 @@ public class MainActivity extends AppCompatActivity {
                     mCamera.stopPreview();
                 }
             }
-        });
+        };
+        mHolder.setFixedSize(960,720);
+        mHolder.addCallback(mHolderCallback);
         mCaptureButton.setOnClickListener(new View.OnClickListener() {
-            private static final int STATE_READY=1;
-            private static final int STATE_FROZEN=0;
-            public int state = STATE_READY;
-
             @Override
             public void onClick(View view) {
                 if(mCamera != null) {
                     if (state == STATE_READY) {
-                        mCamera.takePicture(null, null, callback);
+                        mCamera.takePicture(null, null, mCameraCallback);
                         state = STATE_FROZEN;
-
+                        bottomPane1.setVisibility(View.GONE);
+                        bottomPane2.setVisibility(View.VISIBLE);
                     } else {
                         mCamera.startPreview();
                         state = STATE_READY;
+                        bottomPane2.setVisibility(View.GONE);
+                        bottomPane1.setVisibility(View.VISIBLE);
                     }
                 }
             }
         });
 
         if(checkCameraHardware()){
-            mCamera = getCameraInstance();
             setupCamera();
-            mSwtichButton.setOnClickListener(new View.OnClickListener() {
+            mSwitchButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
                     if(mCamera != null){
@@ -149,21 +123,81 @@ public class MainActivity extends AppCompatActivity {
                     }else{
                         currentCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
                     }
-                    mCamera = getCameraInstance();
                     setupCamera();
                 }
             });
         }else{
             Toast.makeText(this,"NO CAMERA DETECTED!",Toast.LENGTH_LONG).show();
         }
+        mAcceptButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if(capturedImage != null) {
+                    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+                    capturedImage.compress(Bitmap.CompressFormat.PNG, 0, baos);
+                    File file = getOutputMediaFile();
+                    if (file == null) return;
+                    try {
+                        FileOutputStream fos = new FileOutputStream(file);
+                        fos.write(baos.toByteArray());
+                        fos.close();
+
+                        //Send to AnimationActivity
+                        Intent intent = new Intent(MainActivity.this, AnimationActivity.class);
+                        intent.putExtra("path",file.getAbsolutePath());
+                        startActivity(intent);
+                    } catch (java.io.IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+                mCamera.startPreview();
+                state = STATE_READY;
+                bottomPane2.setVisibility(View.GONE);
+                bottomPane1.setVisibility(View.VISIBLE);
+            }
+            private File getOutputMediaFile(){
+                File dir = new File(Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_PICTURES), "De_stress");
+                if(!dir.exists()){
+                    if(!dir.mkdirs()) {
+                        return null;
+                    }
+                }
+                String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+                return new File(dir + File.separator + "IMG_" + timeStamp + ".png");
+            }
+        });
+        mDeclineButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (state == STATE_READY) {
+                    state = STATE_FROZEN;
+                    bottomPane1.setVisibility(View.GONE);
+                    bottomPane2.setVisibility(View.VISIBLE);
+                } else {
+                    mCamera.startPreview();
+                    state = STATE_READY;
+                    bottomPane2.setVisibility(View.GONE);
+                    bottomPane1.setVisibility(View.VISIBLE);
+                }
+            }
+        });
     }
     private void setupCamera(){
+        mCamera = getCameraInstance();
         if(mCamera == null){
             Toast.makeText(this,"CAMERA UNAVAILABLE!",Toast.LENGTH_LONG).show();
         }else{
+            mCamera.stopPreview();
+            try {
+                mCamera.setPreviewDisplay(mHolder);
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            mCamera.setDisplayOrientation(90);
             Camera.Parameters parameters = mCamera.getParameters();
-            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
             mCamera.setParameters(parameters);
+            mCamera.startPreview();
         }
     }
     private boolean checkCameraHardware(){

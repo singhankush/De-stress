@@ -2,10 +2,8 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/De-stress.iml" filepath="$PROJECT_DIR$/De-stress.iml" />
-      <module fileurl="file://C:\Users\vipul\Documents\De-stress\Destress.iml" filepath="C:\Users\vipul\Documents\De-stress\Destress.iml" />
+      <module fileurl="file://$PROJECT_DIR$/Destress.iml" filepath="$PROJECT_DIR$/Destress.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
-      <module fileurl="file://C:\Users\vipul\Documents\De-stress\app\app.iml" filepath="C:\Users\vipul\Documents\De-stress\app\app.iml" />
     </modules>
   </component>
 </project>

@@ -13,11 +13,31 @@
         android:layout_height="match_parent"
         android:id="@+id/camera_preview"
         android:layout_alignParentTop="true">
-        <TextView
+
+        <LinearLayout
+            android:orientation="horizontal"
             android:id="@+id/top_text"
-            android:layout_alignParentTop="true"
             android:layout_width="match_parent"
-            app:layout_heightPercent="8.33%" />
+            android:layout_alignParentTop="true"
+            android:padding="@dimen/padding"
+            android:gravity="center_vertical"
+            app:layout_heightPercent="8.33%">
+            <ImageView
+                android:padding="@dimen/padding"
+                android:scaleType="centerInside"
+                android:src="@mipmap/ic_launcher"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size" />
+
+            <TextView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1"
+                android:fontFamily="cursive"
+                android:text="@string/app_name"
+                android:textColor="@color/background"
+                android:textSize="20dp" />
+        </LinearLayout>
         <SurfaceView
             android:layout_below="@+id/top_text"
             android:id="@+id/snap_view"
@@ -25,6 +45,7 @@
             app:layout_heightPercent="75%"
             android:layout_weight="1"/>
         <FrameLayout
+            android:id="@+id/bottom_pane"
             android:layout_below="@id/snap_view"
             android:layout_width="match_parent"
             android:background="@color/background"
@@ -63,7 +84,7 @@
                     android:layout_alignParentLeft="true"
                     android:gravity="center">
                     <ImageButton
-                        android:id="@+id/decline"
+                        android:id="@+id/decline_button"
                         android:background="@null"
                         android:src="@drawable/ic_close_white_24dp"
                         android:layout_width="@dimen/button_size"
@@ -75,7 +96,7 @@
                     app:layout_widthPercent="50%"
                     android:gravity="center">
                     <ImageButton
-                        android:id="@+id/accept"
+                        android:id="@+id/accept_button"
                         android:background="@null"
                         android:src="@drawable/ic_check_white_24dp"
                         android:layout_width="@dimen/button_size"
