@@ -4,36 +4,17 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/background_light"
-    tools:context="com.destress.bdsman.de_stress.MainActivity">
-
+    tools:context="com.destress.bdsman.de_stress.AnimationActivity">
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <FrameLayout
-            android:id="@+id/camera_preview"
-            android:layout_width="match_parent"
-            android:layout_height="0dp"
-            android:layout_above="@+id/scroll_view"
-            android:layout_alignParentTop="true"
-            android:padding="@dimen/padding">
-            <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/gridview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:columnWidth="90dp"
-                android:gravity="center"
-                android:horizontalSpacing="10dp"
-                android:numColumns="auto_fit"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="10dp"
-                />
-            <ImageView
-                android:id="@+id/snap_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Click Snap"/>
-        </FrameLayout>
+
+        <ImageView
+            android:id="@+id/snap_image"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/mayuri_shiina"/>
+
         <HorizontalScrollView
             android:id="@+id/scroll_view"
             android:layout_width="wrap_content"
@@ -59,6 +40,4 @@
             </LinearLayout>
         </HorizontalScrollView>
     </RelativeLayout>
-
-
 </android.support.constraint.ConstraintLayout>

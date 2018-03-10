@@ -54,6 +54,7 @@ public class AnimationActivity extends AppCompatActivity {
         try {
             //default audio Player file set.
             audioPlayer.setDataSource(getApplicationContext(), audioUri);
+            audioPlayer.prepare();
         } catch (IOException e) {
             Log.d("ErrorMessage", "Audio Player Unable to get Audio Uri or Context");
         }
@@ -66,10 +67,12 @@ public class AnimationActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 snapImage.startAnimation(snapImageShakeAnimation);
+                audioPlayer.start();
             }
         });
         //End of Animation
     }
+
     //Converts Raw data id to Uri for Audio Player
     public Uri getAudioUri(int id){
         return Uri.parse("android.resource://" + PACKAGE_NAME + "/" + id);

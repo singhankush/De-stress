@@ -7,54 +7,40 @@
     android:background="@android:color/background_light"
     tools:context="com.destress.bdsman.de_stress.MainActivity">
 
-    <RelativeLayout
+    <LinearLayout
+        android:id="@+id/camera_preview"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <FrameLayout
-            android:id="@+id/camera_preview"
+        android:layout_height="match_parent"
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
+        <SurfaceView
+            android:id="@+id/snap_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_above="@+id/scroll_view"
-            android:layout_alignParentTop="true"
-            android:padding="@dimen/padding">
-            <SurfaceView
-                android:id="@+id/snap_view"
-                android:layout_width="match_parent"
-                android:layout_height="0dp"
-                android:layout_above="@+id/scroll_view"
-                android:layout_alignParentTop="true"
-                android:padding="@dimen/padding">
-            </SurfaceView>
-
-            <GridView xmlns:android="http://schemas.android.com/apk/res/android"
-                android:id="@+id/gridview"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:columnWidth="90dp"
-                android:gravity="center"
-                android:horizontalSpacing="10dp"
-                android:numColumns="auto_fit"
-                android:stretchMode="columnWidth"
-                android:verticalSpacing="10dp"
-                />
-            <ImageView
-                android:id="@+id/snap_image"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Click Snap"/>
-
+            android:layout_weight="1"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/background">
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/capture_button"
                 android:layout_width="@dimen/button_size"
                 android:layout_height="@dimen/button_size"
-                android:layout_gravity="bottom|center_horizontal"
-                android:alpha="0.7"
+                android:layout_centerInParent="true"
                 app:backgroundTint="@android:color/white"
                 app:elevation="@dimen/elevation"
-                app:rippleColor="@color/colorAccent"
+                app:rippleColor="@android:color/holo_blue_light"
                 app:useCompatPadding="true" />
-        </FrameLayout>
-    </RelativeLayout>
-
+            <ImageButton
+                android:id="@+id/switch_camera_button"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_margin="@dimen/margin"
+                android:background="@null"
+                android:src="@drawable/ic_switch_camera_white_24dp" />
+        </RelativeLayout>
+    </LinearLayout>
 
 </android.support.constraint.ConstraintLayout>
