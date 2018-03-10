@@ -1,10 +1,12 @@
 package com.destress.bdsman.de_stress;
 
+import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
@@ -21,7 +23,7 @@ import java.util.Random;
  * Created by vipul on 10-03-2018.
  */
 
-public class AnimationActivity extends AppCompatActivity {
+public class AnimationActivity extends AppCompatActivity implements View.OnClickListener {
 
     //Declaration of Package Name
     //Used to retrieve Audio Uri
@@ -60,17 +62,18 @@ public class AnimationActivity extends AppCompatActivity {
         }
         //Audio Player Ended
 
-        //Start of Animation
+        //Start of Animation Default Declaration
         snapImage = findViewById(R.id.snap_image);
         snapImageShakeAnimation = AnimationUtils.loadAnimation(this, R.anim.shake);
         snapImage.setOnClickListener(new View.OnClickListener() {
             @Override
-            public void onClick(View v) {
+            public void onClick(View view) {
                 snapImage.startAnimation(snapImageShakeAnimation);
                 audioPlayer.start();
+                crack();
             }
         });
-        //End of Animation
+        //End of Animation Default Declaration
     }
 
     //Converts Raw data id to Uri for Audio Player
@@ -78,6 +81,8 @@ public class AnimationActivity extends AppCompatActivity {
         return Uri.parse("android.resource://" + PACKAGE_NAME + "/" + id);
     }
 
+    //Split Image For Animation start
+    //For future Use
     private void splitImage(ImageView image, int chunkNumber){
         //For the number of rows and columns of the grid to be displayed
         //Image divided in nxn matrix where rows = cols = n
@@ -138,4 +143,51 @@ public class AnimationActivity extends AppCompatActivity {
             grid.setAdapter(new ImageAdapter(this, row_images, height, width));
         }
     }*/
+
+    //Split Image for Animation Feature End
+
+    //OnClick Listener starts
+    @Override
+    public void onClick(View v) {
+        //If our applications' button is clicked
+        if (v.getId() == R.id.snap_image) {
+            //snapImage.startAnimation(snapImageShakeAnimation);
+            //audioPlayer.start();
+            //crack();
+        }
+    }
+    //OnClick Listener Ends
+
+    // Crack Screen Animation function Start
+    private void crack(){
+        // Overlays Crack Background.
+        visualFX();
+        //Vibrates Mobile
+        vibrateFX();
+    }
+
+    private void visualFX(){
+        //Set background with broken glass image
+        findViewById(R.id.background).setBackgroundResource(R.drawable.crack);
+    }
+    private void vibrateFX(){
+        //Create vibrator object
+        Vibrator mv = (Vibrator)getSystemService(Context.VIBRATOR_SERVICE);
+        try{
+            //Vibrate for 500 MS
+            mv.vibrate(new long[]{ 0, 500, 0 }, -1);
+        }catch (NullPointerException e){
+            Log.d("Error", "Vibrate Error Occurred");
+        }
+    }
+    //Crack Screen Animation function End
+
+    protected void onDestroy() {
+        super.onDestroy();
+        // Release mediaplayer
+        if (audioPlayer != null) {
+            audioPlayer.release();
+            audioPlayer = null;
+        }
+    }
 }
