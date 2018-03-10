@@ -7,40 +7,83 @@
     android:background="@android:color/background_light"
     tools:context="com.destress.bdsman.de_stress.MainActivity">
 
-    <LinearLayout
+    <android.support.percent.PercentRelativeLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:id="@+id/camera_preview"
         android:layout_alignParentTop="true">
+        <TextView
+            android:id="@+id/top_text"
+            android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            app:layout_heightPercent="8.33%" />
         <SurfaceView
+            android:layout_below="@+id/top_text"
             android:id="@+id/snap_view"
             android:layout_width="match_parent"
-            android:layout_height="0dp"
+            app:layout_heightPercent="75%"
             android:layout_weight="1"/>
-        <RelativeLayout
-            android:background="@color/background"
+        <FrameLayout
+            android:layout_below="@id/snap_view"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-            <android.support.design.widget.FloatingActionButton
-                android:id="@+id/capture_button"
-                android:layout_width="@dimen/button_size"
-                android:layout_height="@dimen/button_size"
-                app:backgroundTint="@android:color/white"
-                android:layout_centerInParent="true"
-                app:rippleColor="@android:color/holo_blue_light"
-                app:elevation="@dimen/elevation"
-                app:useCompatPadding="true" />
-            <ImageButton
-                android:src="@drawable/ic_switch_camera_white_24dp"
-                android:id="@+id/switch_camera_button"
-                android:background="@null"
-                android:layout_margin="@dimen/margin"
-                android:layout_centerVertical="true"
-                android:layout_alignParentRight="true"
-                android:layout_width="@dimen/button_size"
-                android:layout_height="@dimen/button_size" />
-        </RelativeLayout>
-    </LinearLayout>
+            android:background="@color/background"
+            app:layout_heightPercent="16.67%">
+            <RelativeLayout
+                android:id="@+id/bottom_pane1"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <android.support.design.widget.FloatingActionButton
+                    android:id="@+id/capture_button"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    app:backgroundTint="@android:color/white"
+                    android:layout_centerInParent="true"
+                    app:rippleColor="@android:color/holo_blue_light"
+                    app:elevation="@dimen/elevation"
+                    app:useCompatPadding="true" />
+                <ImageButton
+                    android:src="@drawable/ic_switch_camera_white_24dp"
+                    android:id="@+id/switch_camera_button"
+                    android:background="@null"
+                    android:layout_margin="@dimen/margin"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size" />
+            </RelativeLayout>
+            <android.support.percent.PercentRelativeLayout
+                android:id="@+id/bottom_pane2"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+                <LinearLayout
+                    android:layout_height="match_parent"
+                    app:layout_widthPercent="50%"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/decline"
+                        android:background="@null"
+                        android:src="@drawable/ic_close_white_24dp"
+                        android:layout_width="@dimen/button_size"
+                        android:layout_height="@dimen/button_size" />
+                </LinearLayout>
+                <LinearLayout
+                    android:layout_alignParentRight="true"
+                    android:layout_height="match_parent"
+                    app:layout_widthPercent="50%"
+                    android:gravity="center">
+                    <ImageButton
+                        android:id="@+id/accept"
+                        android:background="@null"
+                        android:src="@drawable/ic_check_white_24dp"
+                        android:layout_width="@dimen/button_size"
+                        android:layout_height="@dimen/button_size" />
+                </LinearLayout>
+            </android.support.percent.PercentRelativeLayout>
+        </FrameLayout>
+
+    </android.support.percent.PercentRelativeLayout>
 
 </android.support.constraint.ConstraintLayout>
