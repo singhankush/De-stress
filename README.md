@@ -30,6 +30,6 @@ to be edited further
 
 ## Contributors
 
-- :sushi: [Ankush Singh](https://github.com/singhankush)
+- [Ankush Singh](https://github.com/singhankush)
 - [Vipul Gupta](https://github.com/vipul26)
 - [Debashish Nayak](https://github.com/theindianotaku)
