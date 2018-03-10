@@ -9,15 +9,67 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <View
+        <SurfaceView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="0dp"
             android:id="@+id/snap_view"
-            android:padding="@string/padding"></View>
+            android:layout_alignParentTop="true"
+            android:layout_above="@+id/scroll_view"
+            android:padding="@dimen/padding"></SurfaceView>
         <HorizontalScrollView
-            android:layout_width="match_parent"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:id="@+id/list"></HorizontalScrollView>
+            android:id="@+id/scroll_view"
+            android:layout_centerHorizontal="true"
+            android:layout_alignParentBottom="true">
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:gravity="center">
+
+                <ImageButton
+                    android:id="@+id/button1"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:padding="@dimen/padding"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:elevation="@dimen/padding"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/Mayuri_Shiina" />
+                <ImageButton
+                    android:id="@+id/button2"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:padding="@dimen/padding"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:elevation="@dimen/padding"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/Mayuri_Shiina" />
+                <ImageButton
+                    android:id="@+id/button3"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:padding="@dimen/padding"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:elevation="@dimen/padding"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/Mayuri_Shiina" />
+                <ImageButton
+                    android:id="@+id/button4"
+                    android:layout_width="@dimen/button_size"
+                    android:layout_height="@dimen/button_size"
+                    android:padding="@dimen/padding"
+                    android:adjustViewBounds="true"
+                    android:background="@null"
+                    android:elevation="@dimen/padding"
+                    android:scaleType="centerInside"
+                    android:src="@drawable/Mayuri_Shiina" />
+            </LinearLayout>
+        </HorizontalScrollView>
     </RelativeLayout>
 
 
