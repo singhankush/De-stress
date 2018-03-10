@@ -9,12 +9,18 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <HorizontalScrollView
+        <ImageView
+            android:id="@+id/snap_image"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:src="@drawable/mayuri_shiina"/>
+
+        <HorizontalScrollView
             android:id="@+id/scroll_view"
-            android:layout_centerHorizontal="true"
-            android:layout_alignParentBottom="true">
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_centerHorizontal="true">
 
             <LinearLayout
                 android:layout_width="wrap_content"
@@ -25,14 +31,13 @@
                     android:id="@+id/button1"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    app:useCompatPadding="true"
-                    app:elevation="@dimen/elevation"
-                    app:backgroundTint="@android:color/white"
-                    android:scaleType="centerInside"
                     android:adjustViewBounds="true"
-                    android:src="@drawable/mayuri_shiina" />
+                    android:scaleType="centerInside"
+                    android:src="@drawable/mayuri_shiina"
+                    app:backgroundTint="@android:color/white"
+                    app:elevation="@dimen/elevation"
+                    app:useCompatPadding="true" />
             </LinearLayout>
         </HorizontalScrollView>
     </RelativeLayout>
-
 </android.support.constraint.ConstraintLayout>
