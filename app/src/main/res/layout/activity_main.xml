@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@android:color/background_light"
     tools:context="com.destress.bdsman.de_stress.MainActivity">
 
     <RelativeLayout
@@ -20,19 +21,17 @@
                 android:id="@+id/snap_view"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent" />
-            <ImageButton
+
+            <android.support.design.widget.FloatingActionButton
                 android:id="@+id/capture_button"
-                android:background="?android:selectableItemBackground"
-                android:src="@drawable/pokeball"
-                android:layout_gravity="bottom|center_horizontal"
-                android:scaleType="centerInside"
                 android:layout_width="@dimen/button_size"
-                android:layout_height="@dimen/button_size" />
-            <ImageView
-                android:id="@+id/image_view"
-                android:visibility="gone"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent" />
+                android:layout_height="@dimen/button_size"
+                android:layout_gravity="bottom|center_horizontal"
+                android:alpha="0.7"
+                app:backgroundTint="@android:color/white"
+                app:rippleColor="@color/colorAccent"
+                app:elevation="@dimen/elevation"
+                app:useCompatPadding="true" />
         </FrameLayout>
         <HorizontalScrollView
             android:layout_width="wrap_content"
@@ -46,45 +45,15 @@
                 android:layout_height="wrap_content"
                 android:gravity="center">
 
-                <ImageButton
+                <android.support.design.widget.FloatingActionButton
                     android:id="@+id/button1"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    android:padding="@dimen/padding"
-                    android:adjustViewBounds="true"
-                    android:background="?android:selectableItemBackground"
-                    android:elevation="@dimen/padding"
+                    app:useCompatPadding="true"
+                    app:elevation="@dimen/elevation"
+                    app:backgroundTint="@android:color/white"
                     android:scaleType="centerInside"
-                    android:src="@drawable/mayuri_shiina" />
-                <ImageButton
-                    android:id="@+id/button2"
-                    android:layout_width="@dimen/button_size"
-                    android:layout_height="@dimen/button_size"
-                    android:padding="@dimen/padding"
                     android:adjustViewBounds="true"
-                    android:background="?android:selectableItemBackground"
-                    android:elevation="@dimen/padding"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/mayuri_shiina" />
-                <ImageButton
-                    android:id="@+id/button3"
-                    android:layout_width="@dimen/button_size"
-                    android:layout_height="@dimen/button_size"
-                    android:padding="@dimen/padding"
-                    android:adjustViewBounds="true"
-                    android:background="?android:selectableItemBackground"
-                    android:elevation="@dimen/padding"
-                    android:scaleType="centerInside"
-                    android:src="@drawable/mayuri_shiina" />
-                <ImageButton
-                    android:id="@+id/button4"
-                    android:layout_width="@dimen/button_size"
-                    android:layout_height="@dimen/button_size"
-                    android:padding="@dimen/padding"
-                    android:adjustViewBounds="true"
-                    android:background="?android:selectableItemBackground"
-                    android:elevation="@dimen/padding"
-                    android:scaleType="centerInside"
                     android:src="@drawable/mayuri_shiina" />
             </LinearLayout>
         </HorizontalScrollView>
