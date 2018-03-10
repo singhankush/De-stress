@@ -9,13 +9,31 @@
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <SurfaceView
+        <FrameLayout
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:id="@+id/snap_view"
+            android:id="@+id/camera_preview"
             android:layout_alignParentTop="true"
             android:layout_above="@+id/scroll_view"
-            android:padding="@dimen/padding"></SurfaceView>
+            android:padding="@dimen/padding">
+            <SurfaceView
+                android:id="@+id/snap_view"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+            <ImageButton
+                android:id="@+id/capture_button"
+                android:background="?android:selectableItemBackground"
+                android:src="@drawable/pokeball"
+                android:layout_gravity="bottom|center_horizontal"
+                android:scaleType="centerInside"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size" />
+            <ImageView
+                android:id="@+id/image_view"
+                android:visibility="gone"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
         <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -34,40 +52,40 @@
                     android:layout_height="@dimen/button_size"
                     android:padding="@dimen/padding"
                     android:adjustViewBounds="true"
-                    android:background="@null"
+                    android:background="?android:selectableItemBackground"
                     android:elevation="@dimen/padding"
                     android:scaleType="centerInside"
-                    android:src="@drawable/Mayuri_Shiina" />
+                    android:src="@drawable/mayuri_shiina" />
                 <ImageButton
                     android:id="@+id/button2"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
                     android:padding="@dimen/padding"
                     android:adjustViewBounds="true"
-                    android:background="@null"
+                    android:background="?android:selectableItemBackground"
                     android:elevation="@dimen/padding"
                     android:scaleType="centerInside"
-                    android:src="@drawable/Mayuri_Shiina" />
+                    android:src="@drawable/mayuri_shiina" />
                 <ImageButton
                     android:id="@+id/button3"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
                     android:padding="@dimen/padding"
                     android:adjustViewBounds="true"
-                    android:background="@null"
+                    android:background="?android:selectableItemBackground"
                     android:elevation="@dimen/padding"
                     android:scaleType="centerInside"
-                    android:src="@drawable/Mayuri_Shiina" />
+                    android:src="@drawable/mayuri_shiina" />
                 <ImageButton
                     android:id="@+id/button4"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
                     android:padding="@dimen/padding"
                     android:adjustViewBounds="true"
-                    android:background="@null"
+                    android:background="?android:selectableItemBackground"
                     android:elevation="@dimen/padding"
                     android:scaleType="centerInside"
-                    android:src="@drawable/Mayuri_Shiina" />
+                    android:src="@drawable/mayuri_shiina" />
             </LinearLayout>
         </HorizontalScrollView>
     </RelativeLayout>

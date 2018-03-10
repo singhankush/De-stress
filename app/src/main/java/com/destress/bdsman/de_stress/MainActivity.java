@@ -1,19 +1,31 @@
 package com.destress.bdsman.de_stress;
 
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.hardware.Camera;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Surface;
+import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.FrameLayout;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
+import android.widget.ImageView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
     private HorizontalScrollView mScrollView;
     private SurfaceView mSnapView;
+    private SurfaceHolder mHolder;
     private Camera mCamera;
+    private ImageButton mCaptureButton;
+    private ImageView mImageView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,10 +33,84 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mScrollView = findViewById(R.id.scroll_view);
         mSnapView = findViewById(R.id.snap_view);
+        mHolder = mSnapView.getHolder();
+        mCaptureButton = findViewById(R.id.capture_button);
+        mImageView = findViewById(R.id.image_view);
 
+        if(checkCameraHardware()){
+            mCamera = getCameraInstance();
+            if(mCamera == null){
+                Toast.makeText(this,"CAMERA UNAVAILABLE!",Toast.LENGTH_LONG).show();
+            }else{
+                mHolder.addCallback(new SurfaceHolder.Callback() {
+                    @Override
+                    public void surfaceCreated(SurfaceHolder surfaceHolder) {
+                        try {
+                            mCamera.setPreviewDisplay(surfaceHolder);
+                            mCamera.setDisplayOrientation(90);
+                            mCamera.startPreview();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void surfaceChanged(SurfaceHolder surfaceHolder, int i, int i1, int i2) {
+                        if(mHolder.getSurface() == null) return;
+                        try {
+                            mCamera.stopPreview();
+                        }catch (Exception e){
+                            e.printStackTrace();
+                        }
+                        try {
+                            mCamera.setPreviewDisplay(mHolder);
+                            mCamera.setDisplayOrientation(90);
+                            mCamera.startPreview();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+                    }
+
+                    @Override
+                    public void surfaceDestroyed(SurfaceHolder surfaceHolder) {
+                        if(mCamera!=null){
+                            mCamera.stopPreview();
+                        }
+                    }
+                });
+                mCaptureButton.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        mCamera.takePicture(null, null, new Camera.PictureCallback() {
+                            @Override
+                            public void onPictureTaken(byte[] bytes, Camera camera) {
+                                Bitmap bitmap = BitmapFactory.decodeByteArray(bytes,0,bytes.length);
+                                mImageView.setImageBitmap(bitmap);
+                                mImageView.setVisibility(View.VISIBLE);
+                                mImageView.invalidate();
+                            }
+                        });
+                    }
+                });
+
+            }
+        }else{
+            Toast.makeText(this,"NO CAMERA DETECTED!",Toast.LENGTH_LONG).show();
+        }
     }
 
-    private void safeOpenCamera(View view){
+    private boolean checkCameraHardware(){
+        if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) return true;
+        return false;
+    }
 
+    public static Camera getCameraInstance(){
+        Camera c = null;
+        try{
+            c = Camera.open();
+        }catch (Exception e){
+
+        }
+        return c;
     }
 }
