@@ -26,16 +26,18 @@ public class MainActivity extends AppCompatActivity {
     private SurfaceHolder mHolder;
     private Camera mCamera;
     private ImageButton mCaptureButton;
-    private ImageView mImageView;
-
+    private ImageButton mSwtichButton;
+    public int currentCameraId;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         setContentView(R.layout.activity_main);
         mScrollView = findViewById(R.id.scroll_view);
         mSnapView = findViewById(R.id.snap_view);
         mHolder = mSnapView.getHolder();
         mCaptureButton = findViewById(R.id.capture_button);
+        mSwtichButton = findViewById(R.id.switch_camera_button);
 //        mImageView = findViewById(R.id.image_view);
 
         if(checkCameraHardware()){
