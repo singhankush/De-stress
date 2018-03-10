@@ -8,38 +8,38 @@
     tools:context="com.destress.bdsman.de_stress.MainActivity">
 
     <LinearLayout
-        android:id="@+id/camera_preview"
+        android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_alignParentTop="true"
-        android:orientation="vertical">
+        android:id="@+id/camera_preview"
+        android:layout_alignParentTop="true">
         <SurfaceView
             android:id="@+id/snap_view"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"/>
         <RelativeLayout
+            android:background="@color/background"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/background">
+            android:layout_height="wrap_content">
             <android.support.design.widget.FloatingActionButton
                 android:id="@+id/capture_button"
                 android:layout_width="@dimen/button_size"
                 android:layout_height="@dimen/button_size"
-                android:layout_centerInParent="true"
                 app:backgroundTint="@android:color/white"
-                app:elevation="@dimen/elevation"
+                android:layout_centerInParent="true"
                 app:rippleColor="@android:color/holo_blue_light"
+                app:elevation="@dimen/elevation"
                 app:useCompatPadding="true" />
             <ImageButton
+                android:src="@drawable/ic_switch_camera_white_24dp"
                 android:id="@+id/switch_camera_button"
-                android:layout_width="@dimen/button_size"
-                android:layout_height="@dimen/button_size"
-                android:layout_alignParentRight="true"
-                android:layout_centerVertical="true"
-                android:layout_margin="@dimen/margin"
                 android:background="@null"
-                android:src="@drawable/ic_switch_camera_white_24dp" />
+                android:layout_margin="@dimen/margin"
+                android:layout_centerVertical="true"
+                android:layout_alignParentRight="true"
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size" />
         </RelativeLayout>
     </LinearLayout>
 
