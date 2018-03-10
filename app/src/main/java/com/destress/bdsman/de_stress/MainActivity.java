@@ -2,18 +2,23 @@ package com.destress.bdsman.de_stress;
 
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.hardware.Camera;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Surface;
+import android.view.SurfaceView;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.HorizontalScrollView;
 
 import java.io.IOException;
 
 public class MainActivity extends AppCompatActivity {
 
-    private HorizontalScrollView mListView;
-    private View mSnapView;
+    private HorizontalScrollView mScrollView;
+    private SurfaceView mSnapView;
+    private Camera mCamera;
 
     //Declaration of Package Name
     //Used to retrieve Audio Uri
@@ -30,7 +35,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
         PACKAGE_NAME = getApplicationContext().getPackageName();
-        mListView = findViewById(R.id.list);
+
+        mScrollView = findViewById(R.id.scroll_view);
+        mSnapView = findViewById(R.id.snap_view);
 
         //Audio Player Work Started
         audioPlayer = new MediaPlayer();
@@ -47,5 +54,8 @@ public class MainActivity extends AppCompatActivity {
     //Converts Raw data id to Uri for Audio Player
     public Uri getAudioUri(int id){
         return Uri.parse("android.resource://" + PACKAGE_NAME + "/" + id);
+    }
+
+    private void safeOpenCamera(View view){
     }
 }
