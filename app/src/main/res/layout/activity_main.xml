@@ -15,7 +15,24 @@
             android:id="@+id/snap_view"
             android:layout_alignParentTop="true"
             android:layout_above="@+id/scroll_view"
-            android:padding="@dimen/padding"></SurfaceView>
+            android:padding="@dimen/padding">
+            <GridView xmlns:android="http://schemas.android.com/apk/res/android"
+                android:id="@+id/gridview"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:columnWidth="90dp"
+                android:numColumns="auto_fit"
+                android:verticalSpacing="10dp"
+                android:horizontalSpacing="10dp"
+                android:stretchMode="columnWidth"
+                android:gravity="center"
+                />
+            <ImageView
+                android:id="@+id/snap_image"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Click Snap"/>
+        </SurfaceView>
         <HorizontalScrollView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
