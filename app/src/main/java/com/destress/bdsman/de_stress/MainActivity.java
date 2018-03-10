@@ -50,7 +50,7 @@ public class MainActivity extends AppCompatActivity {
         mHolder = mSnapView.getHolder();
         mCaptureButton = findViewById(R.id.capture_button);
         mSwtichButton = findViewById(R.id.switch_camera_button);
-        bottomPane1 = findViewById(R.id.)
+//        bottomPane1 = findViewById(R.id.)
         final Camera.PictureCallback callback = new Camera.PictureCallback() {
             @Override
             public void onPictureTaken(byte[] bytes, Camera camera) {
