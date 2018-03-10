@@ -150,11 +150,6 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
     @Override
     public void onClick(View v) {
         //If our applications' button is clicked
-        if (v.getId() == R.id.snap_image) {
-            //snapImage.startAnimation(snapImageShakeAnimation);
-            //audioPlayer.start();
-            //crack();
-        }
     }
     //OnClick Listener Ends
 

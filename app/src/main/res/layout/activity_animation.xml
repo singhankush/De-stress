@@ -2,43 +2,77 @@
 <android.support.constraint.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
     tools:context="com.destress.bdsman.de_stress.AnimationActivity">
-    <RelativeLayout
+
+    <LinearLayout
         android:id="@+id/background"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical"
+        android:weightSum="10">
 
         <ImageView
             android:id="@+id/snap_image"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:src="@drawable/mayuri_shiina"/>
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="8"
+            android:src="@drawable/mayuri_shiina" />
 
         <HorizontalScrollView
             android:id="@+id/scroll_view"
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentBottom="true"
-            android:layout_centerHorizontal="true">
+            android:layout_weight="2">
 
             <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:gravity="center">
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:weightSum="4">
 
-                <android.support.design.widget.FloatingActionButton
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/button1"
-                    android:layout_width="@dimen/button_size"
-                    android:layout_height="@dimen/button_size"
-                    android:adjustViewBounds="true"
-                    android:scaleType="centerInside"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_margin="2dp"
                     android:src="@drawable/mayuri_shiina"
-                    app:backgroundTint="@android:color/white"
-                    app:elevation="@dimen/elevation"
-                    app:useCompatPadding="true" />
+                    app:civ_border_color="#FFFFFF"
+                    app:civ_border_width="2dp"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/button2"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_margin="2dp"
+                    android:src="@drawable/mayuri_shiina"
+                    app:civ_border_color="#FFFFFF"
+                    app:civ_border_width="2dp"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/button3"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_margin="2dp"
+                    android:src="@drawable/mayuri_shiina"
+                    app:civ_border_color="#FFFFFF"
+                    app:civ_border_width="2dp"/>
+
+                <de.hdodenhof.circleimageview.CircleImageView
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/button4"
+                    android:layout_width="96dp"
+                    android:layout_height="96dp"
+                    android:layout_margin="2dp"
+                    android:src="@drawable/mayuri_shiina"
+                    app:civ_border_color="#FFFFFF"
+                    app:civ_border_width="2dp"/>
+
             </LinearLayout>
         </HorizontalScrollView>
-    </RelativeLayout>
+    </LinearLayout>
 </android.support.constraint.ConstraintLayout>
