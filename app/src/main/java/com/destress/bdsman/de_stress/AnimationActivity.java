@@ -2,6 +2,7 @@ package com.destress.bdsman.de_stress;
 
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
@@ -12,6 +13,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -22,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Random;
 
 import de.hdodenhof.circleimageview.CircleImageView;
+import pl.droidsonroids.gif.GifDrawable;
 
 /**
  * Created by vipul on 10-03-2018.
@@ -93,12 +96,38 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                 videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
+                        String gifName = "effect_explosion.gif";
+                        String yourData = "<html style=\"margin: 0;\">\n" +
+                                "    <body style=\"margin: 0;\">\n" +
+                                "    <img src=" + gifName + " style=\"width: 100%; height: 100%\" />\n" +
+                                "    </body>\n" +
+                                "    </html>";
+                        WebView webView = (WebView) findViewById(R.id.webView);
+                        webView.getSettings().setAllowFileAccess(true);
+                        webView.loadDataWithBaseURL("file:///android_asset/", yourData, "text/html", "utf-8", null);
+                        webView.setBackgroundColor(Color.TRANSPARENT);
+                        webView.bringToFront();
                         snapImage.setVisibility(View.VISIBLE);
                         videoview.setVisibility(View.INVISIBLE);
                         imageView.setVisibility(View.INVISIBLE);
                         snapImage.startAnimation(snapImageShakeAnimation);
+                        int audioId = R.raw.bgm_attack; //default mp3 audio.
+                        audioUri = convertIdToUri(audioId);
+                        try {
+                            //default audio Player file set.
+                            try {
+                                audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                            } catch (IllegalStateException e) {
+                                audioPlayer.reset();
+                                audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                            }
+
+                            audioPlayer.prepare();
+                        } catch (IOException e) {
+                            Log.d("ErrorMessage", "Audio Player Unable to get Audio Uri or Context");
+                        }
                         audioPlayer.start();
-                        crack();
+                        // crack();
                     }
                 });
                 ResizeAnimation resizeAnimation = new ResizeAnimation(
@@ -160,7 +189,7 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                 final ImageView imageView = findViewById(R.id.common_video_background);
                 videoview.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
-                Uri uri = convertIdToUri(R.raw.scene_explosion);
+                Uri uri = convertIdToUri(R.raw.scene_onepunch);
                 videoview.setVideoURI(uri);
                 videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
@@ -196,7 +225,7 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                 final ImageView imageView = findViewById(R.id.common_video_background);
                 videoview.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
-                Uri uri = convertIdToUri(R.raw.scene_explosion);
+                Uri uri = convertIdToUri(R.raw.scene_cero);
                 videoview.setVideoURI(uri);
                 videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
@@ -206,7 +235,7 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                         imageView.setVisibility(View.INVISIBLE);
                         snapImage.startAnimation(snapImageShakeAnimation);
                         audioPlayer.start();
-                        crack();
+                        // crack();
                     }
                 });
                 ResizeAnimation resizeAnimation = new ResizeAnimation(

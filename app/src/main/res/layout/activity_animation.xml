@@ -39,9 +39,17 @@
                     android:layout_centerHorizontal="true"
                     android:layout_centerInParent="true"
                     android:layout_centerVertical="true"/>
+                <WebView
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:id="@+id/webView"
+                    android:layout_centerHorizontal="true"
+                    android:layout_centerInParent="true"
+                    android:layout_centerVertical="true" />
                 <ImageView
                     android:id="@+id/snap_image"
                     android:layout_width="match_parent"
+                    android:visibility="invisible"
                     android:layout_height="match_parent"
                     android:src="@drawable/mayuri_shiina" />
             </RelativeLayout>
