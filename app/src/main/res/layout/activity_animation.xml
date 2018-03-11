@@ -49,7 +49,7 @@
                 android:background="@null"
                 android:src="@drawable/ic_autorenew_black_24dp" />
         </RelativeLayout>
-        <RelativeLayout
+        <FrameLayout
             android:id="@+id/middle"
             android:layout_width="match_parent"
             android:layout_below="@+id/top_text"
@@ -63,32 +63,25 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:visibility="invisible"
-                android:layout_centerHorizontal="true"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"
+                android:layout_gravity="center"
                 android:src="@drawable/square" />
             <VideoView
                 android:id="@+id/move_video"
                 android:layout_width="match_parent"
                 android:layout_height="200dp"
                 android:visibility="invisible"
-                android:layout_centerHorizontal="true"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true"/>
+                android:layout_gravity="center"/>
             <ImageView
                 android:scaleType="fitXY"
                 android:id="@+id/snap_image"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"/>
-            <WebView
-                android:layout_width="70dp"
-                android:layout_height="70dp"
-                android:id="@+id/webView"
+            <pl.droidsonroids.gif.GifImageView
+                android:id="@+id/gif_view"
                 android:visibility="invisible"
-                android:layout_centerHorizontal="true"
-                android:layout_centerInParent="true"
-                android:layout_centerVertical="true" />
-        </RelativeLayout>
+                android:layout_width="match_parent"
+                android:layout_height="match_parent" />
+        </FrameLayout>
 
         <HorizontalScrollView
             android:id="@+id/scroll_view"
@@ -103,45 +96,55 @@
                 android:gravity="center"
                 android:weightSum="4">
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                <android.support.design.widget.FloatingActionButton
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/button1"
                     android:layout_width="@dimen/button_size_large"
                     android:layout_height="@dimen/button_size_large"
-                    android:layout_margin="@dimen/margin"
-                    android:src="@drawable/mayuri_shiina"
-                    app:civ_border_color="#FFFFFF"
-                    app:civ_border_width="0.1dp" />
+                    app:useCompatPadding="true"
+                    app:backgroundTint="@null"
+                    app:rippleColor="@color/colorAccent"
+                    app:fabSize="mini"
+                    android:src="@drawable/megumin"
+                    android:scaleType="fitXY"/>
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                <android.support.design.widget.FloatingActionButton
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/button2"
                     android:layout_width="@dimen/button_size_large"
                     android:layout_height="@dimen/button_size_large"
-                    android:layout_margin="@dimen/margin"
-                    android:src="@drawable/mayuri_shiina"
-                    app:civ_border_color="#FFFFFF"
-                    app:civ_border_width="0.1dp" />
+                    app:useCompatPadding="true"
+                    app:backgroundTint="@null"
+                    app:rippleColor="@color/colorAccent"
+                    app:fabSize="mini"
+                    android:src="@drawable/goku_kaioken_kamehameha"
+                    android:scaleType="fitXY"/>
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                <android.support.design.widget.FloatingActionButton
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/button3"
                     android:layout_width="@dimen/button_size_large"
                     android:layout_height="@dimen/button_size_large"
-                    android:layout_margin="@dimen/margin"
-                    android:src="@drawable/mayuri_shiina"
-                    app:civ_border_color="#FFFFFF"
-                    app:civ_border_width="0.1dp" />
+                    app:useCompatPadding="true"
+                    app:backgroundTint="@null"
+                    app:rippleColor="@color/colorAccent"
+                    app:fabSize="mini"
+                    android:src="@drawable/hollow_ichigo"
+                    android:scaleType="fitXY"/>
 
-                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                <android.support.design.widget.FloatingActionButton
+                    xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/button4"
                     android:layout_width="@dimen/button_size_large"
                     android:layout_height="@dimen/button_size_large"
-                    android:layout_margin="@dimen/margin"
-                    android:src="@drawable/mayuri_shiina"
-                    app:civ_border_color="#FFFFFF"
-                    app:civ_border_width="0.1dp" />
+                    app:useCompatPadding="true"
+                    app:backgroundTint="@null"
+                    app:rippleColor="@color/colorAccent"
+                    app:fabSize="mini"
+                    android:src="@drawable/saitama"
+                    android:scaleType="fitXY"/>
             </LinearLayout>
         </HorizontalScrollView>
-
-
 
         <ImageView
             android:id="@+id/crack"

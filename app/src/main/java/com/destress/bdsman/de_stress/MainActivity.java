@@ -184,9 +184,7 @@ public class MainActivity extends AppCompatActivity {
             }
             mCamera.setDisplayOrientation(90);
             Camera.Parameters parameters = mCamera.getParameters();
-            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
-            parameters.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
-            parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
+            parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_CONTINUOUS_PICTURE);
             parameters.setExposureCompensation(0);
             mCamera.setParameters(parameters);
             mCamera.startPreview();

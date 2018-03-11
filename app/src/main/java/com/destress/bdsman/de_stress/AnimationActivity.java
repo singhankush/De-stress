@@ -11,25 +11,26 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.util.Log;
 import android.view.View;
 import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
-import android.webkit.WebView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ProgressBar;
 import android.widget.VideoView;
 
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 
-import de.hdodenhof.circleimageview.CircleImageView;
-import pl.droidsonroids.gif.GifDrawable;
+import pl.droidsonroids.gif.GifImageView;
+
 
 /**
  * Created by vipul on 10-03-2018.
@@ -58,7 +59,7 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
     //End of Variable for Audio Player
 
     //Moves Variables
-    private CircleImageView firstMove,
+    private FloatingActionButton firstMove,
             secondMove, thirdMove,
             fourthMove;
 
@@ -125,6 +126,7 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                 findViewById(R.id.crack).setVisibility(View.INVISIBLE);
                 final VideoView videoview = findViewById(R.id.move_video);
                 final ImageView imageView = findViewById(R.id.common_video_background);
+                final GifImageView gifView = findViewById(R.id.gif_view);
                 videoview.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
                 Uri uri = convertIdToUri(R.raw.scene_explosion);
@@ -132,21 +134,13 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                 videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
-                        String gifName = "effect_explosion.gif";
-                        String yourData = "<html style=\"margin: 0;\">\n" +
-                                "    <body style=\"margin: 0;\">\n" +
-                                "    <img src=" + gifName + " style=\"width: 100%; height: 100%\" />\n" +
-                                "    </body>\n" +
-                                "    </html>";
-                        WebView webView = (WebView) findViewById(R.id.webView);
-                        webView.getSettings().setAllowFileAccess(true);
-                        webView.loadDataWithBaseURL("file:///android_asset/", yourData, "text/html", "utf-8", null);
-                        webView.setBackgroundColor(Color.TRANSPARENT);
-                        webView.bringToFront();
-                        snapImage.setVisibility(View.VISIBLE);
+
                         videoview.setVisibility(View.INVISIBLE);
                         imageView.setVisibility(View.INVISIBLE);
+                        snapImage.setVisibility(View.VISIBLE);
+                        gifView.setVisibility(View.VISIBLE);
                         snapImage.startAnimation(snapImageShakeAnimation);
+                        gifView.setImageResource(R.drawable.effect_explosion);
                         int audioId = R.raw.bgm_attack; //default mp3 audio.
                         audioUri = convertIdToUri(audioId);
                         try {
@@ -157,12 +151,18 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                                 audioPlayer.reset();
                                 audioPlayer.setDataSource(getApplicationContext(), audioUri);
                             }
-
                             audioPlayer.prepare();
                         } catch (IOException e) {
                             Log.d("ErrorMessage", "Audio Player Unable to get Audio Uri or Context");
                         }
                         audioPlayer.start();
+                        audioPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mediaPlayer) {
+                                gifView.setVisibility(View.INVISIBLE);
+                                crack();
+                            }
+                        });
                         // crack();
                         int damage = (int) (Math.round(20*Math.random())+40);
                         health = Math.max(0, health - damage);
@@ -171,6 +171,23 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                         }else{
                             mHealthBar.setProgress(health);
                         }
+
+                        if(health <= 0){
+                            try {
+                            //default audio Player file set.
+                                audioPlayer.stop();
+                                try {
+                                    audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                                } catch (IllegalStateException e) {
+                                    audioPlayer.reset();
+                                    audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                                }
+                                audioPlayer.prepare();
+                            } catch (IOException e) {
+                                Log.d("ErrorMessage", "Audio Player Unable to get Audio Uri or Context");
+                            }
+                                audioPlayer.start();
+                            }
                     }
                 });
                 ResizeAnimation resizeAnimation = new ResizeAnimation(
@@ -190,10 +207,10 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
 
         secondMove.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
-                findViewById(R.id.crack).setVisibility(View.INVISIBLE);
+            public void onClick(View v){findViewById(R.id.crack).setVisibility(View.INVISIBLE);
                 final VideoView videoview = findViewById(R.id.move_video);
                 final ImageView imageView = findViewById(R.id.common_video_background);
+                final GifImageView gifView = findViewById(R.id.gif_view);
                 videoview.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
                 Uri uri = convertIdToUri(R.raw.scene_kamehameha);
@@ -201,18 +218,60 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                 videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
-                        snapImage.setVisibility(View.VISIBLE);
+
                         videoview.setVisibility(View.INVISIBLE);
                         imageView.setVisibility(View.INVISIBLE);
+                        snapImage.setVisibility(View.VISIBLE);
+                        gifView.setVisibility(View.VISIBLE);
                         snapImage.startAnimation(snapImageShakeAnimation);
+                        gifView.setImageResource(R.drawable.effect_blue_fire);
+                        int audioId = R.raw.bgm_kamehameha; //default mp3 audio.
+                        audioUri = convertIdToUri(audioId);
+                        try {
+                            //default audio Player file set.
+                            audioPlayer.stop();
+                            try {
+                                audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                            } catch (IllegalStateException e) {
+                                audioPlayer.reset();
+                                audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                            }
+                            audioPlayer.prepare();
+                        } catch (IOException e) {
+                            Log.d("ErrorMessage", "Audio Player Unable to get Audio Uri or Context");
+                        }
                         audioPlayer.start();
-                        crack();
+                        audioPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mediaPlayer) {
+                                gifView.setVisibility(View.INVISIBLE);
+                                crack();
+                            }
+                        });
+                        // crack();
                         int damage = (int) (Math.round(20*Math.random())+40);
                         health = Math.max(0, health - damage);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                             mHealthBar.setProgress(health, true);
                         }else{
                             mHealthBar.setProgress(health);
+                        }
+
+                        if(health <= 0){
+                            try {
+                                //default audio Player file set.
+                                audioPlayer.stop();
+                                try {
+                                    audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                                } catch (IllegalStateException e) {
+                                    audioPlayer.reset();
+                                    audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                                }
+                                audioPlayer.prepare();
+                            } catch (IOException e) {
+                                Log.d("ErrorMessage", "Audio Player Unable to get Audio Uri or Context");
+                            }
+                            audioPlayer.start();
                         }
                     }
                 });
@@ -233,28 +292,70 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
 
         thirdMove.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
-                findViewById(R.id.crack).setVisibility(View.INVISIBLE);
-                VideoView videoview = findViewById(R.id.move_video);
+            public void onClick(View v){findViewById(R.id.crack).setVisibility(View.INVISIBLE);
+                final VideoView videoview = findViewById(R.id.move_video);
                 final ImageView imageView = findViewById(R.id.common_video_background);
+                final GifImageView gifView = findViewById(R.id.gif_view);
                 videoview.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
-                Uri uri = convertIdToUri(R.raw.scene_onepunch);
+                Uri uri = convertIdToUri(R.raw.scene_cero);
                 videoview.setVideoURI(uri);
                 videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
-                        snapImage.setVisibility(View.VISIBLE);
+
+                        videoview.setVisibility(View.INVISIBLE);
                         imageView.setVisibility(View.INVISIBLE);
+                        snapImage.setVisibility(View.VISIBLE);
+                        gifView.setVisibility(View.VISIBLE);
                         snapImage.startAnimation(snapImageShakeAnimation);
+                        gifView.setImageResource(R.drawable.effect_fire);
+                        int audioId = R.raw.bgm_cero; //default mp3 audio.
+                        audioUri = convertIdToUri(audioId);
+                        try {
+                            //default audio Player file set.
+                            audioPlayer.stop();
+                            try {
+                                audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                            } catch (IllegalStateException e) {
+                                audioPlayer.reset();
+                                audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                            }
+                            audioPlayer.prepare();
+                        } catch (IOException e) {
+                            Log.d("ErrorMessage", "Audio Player Unable to get Audio Uri or Context");
+                        }
                         audioPlayer.start();
-                        crack();
+                        audioPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mediaPlayer) {
+                                gifView.setVisibility(View.INVISIBLE);
+                                crack();
+                            }
+                        });
+                        // crack();
                         int damage = (int) (Math.round(20*Math.random())+40);
                         health = Math.max(0, health - damage);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
                             mHealthBar.setProgress(health, true);
                         }else{
                             mHealthBar.setProgress(health);
+                        }
+
+                        if(health <= 0){
+                            try {
+                                //default audio Player file set.
+                                try {
+                                    audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                                } catch (IllegalStateException e) {
+                                    audioPlayer.reset();
+                                    audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                                }
+                                audioPlayer.prepare();
+                            } catch (IOException e) {
+                                Log.d("ErrorMessage", "Audio Player Unable to get Audio Uri or Context");
+                            }
+                            audioPlayer.start();
                         }
                     }
                 });
@@ -275,22 +376,47 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
 
         fourthMove.setOnClickListener(new View.OnClickListener(){
             @Override
-            public void onClick(View v){
-                findViewById(R.id.crack).setVisibility(View.INVISIBLE);
+            public void onClick(View v){findViewById(R.id.crack).setVisibility(View.INVISIBLE);
                 final VideoView videoview = findViewById(R.id.move_video);
                 final ImageView imageView = findViewById(R.id.common_video_background);
+                final GifImageView gifView = findViewById(R.id.gif_view);
                 videoview.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
-                Uri uri = convertIdToUri(R.raw.scene_cero);
+                Uri uri = convertIdToUri(R.raw.scene_onepunch);
                 videoview.setVideoURI(uri);
                 videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
-                        snapImage.setVisibility(View.VISIBLE);
+
                         videoview.setVisibility(View.INVISIBLE);
                         imageView.setVisibility(View.INVISIBLE);
+                        snapImage.setVisibility(View.VISIBLE);
+                        gifView.setVisibility(View.VISIBLE);
                         snapImage.startAnimation(snapImageShakeAnimation);
+                        gifView.setImageResource(R.drawable.effect_punch);
+                        int audioId = R.raw.bgm_onepunch; //default mp3 audio.
+                        audioUri = convertIdToUri(audioId);
+                        try {
+                            //default audio Player file set.
+                            try {
+                                audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                            } catch (IllegalStateException e) {
+                                audioPlayer.reset();
+                                audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                            }
+                            audioPlayer.prepare();
+                        } catch (IOException e) {
+                            Log.d("ErrorMessage", "Audio Player Unable to get Audio Uri or Context");
+                        }
                         audioPlayer.start();
+                        audioPlayer.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
+                            @Override
+                            public void onCompletion(MediaPlayer mediaPlayer) {
+                                gifView.setVisibility(View.INVISIBLE);
+                                crack();
+                            }
+                        });
+                        // crack();
                         int damage = (int) (Math.round(20*Math.random())+40);
                         health = Math.max(0, health - damage);
                         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
@@ -298,7 +424,22 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                         }else{
                             mHealthBar.setProgress(health);
                         }
-                        // crack();
+
+                        if(health <= 0){
+                            try {
+                                //default audio Player file set.
+                                try {
+                                    audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                                } catch (IllegalStateException e) {
+                                    audioPlayer.reset();
+                                    audioPlayer.setDataSource(getApplicationContext(), audioUri);
+                                }
+                                audioPlayer.prepare();
+                            } catch (IOException e) {
+                                Log.d("ErrorMessage", "Audio Player Unable to get Audio Uri or Context");
+                            }
+                            audioPlayer.start();
+                        }
                     }
                 });
                 ResizeAnimation resizeAnimation = new ResizeAnimation(
