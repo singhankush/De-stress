@@ -123,7 +123,7 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v){
                 findViewById(R.id.crack).setVisibility(View.INVISIBLE);
-                VideoView videoview = findViewById(R.id.move_video);
+                final VideoView videoview = findViewById(R.id.move_video);
                 final ImageView imageView = findViewById(R.id.common_video_background);
                 videoview.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
@@ -192,7 +192,7 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v){
                 findViewById(R.id.crack).setVisibility(View.INVISIBLE);
-                VideoView videoview = findViewById(R.id.move_video);
+                final VideoView videoview = findViewById(R.id.move_video);
                 final ImageView imageView = findViewById(R.id.common_video_background);
                 videoview.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
@@ -277,8 +277,7 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v){
                 findViewById(R.id.crack).setVisibility(View.INVISIBLE);
-                VideoView videoview = findViewById(R.id.move_video);
-                final VideoView videoview = (VideoView) findViewById(R.id.move_video);
+                final VideoView videoview = findViewById(R.id.move_video);
                 final ImageView imageView = findViewById(R.id.common_video_background);
                 videoview.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);

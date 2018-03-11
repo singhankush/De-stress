@@ -50,9 +50,13 @@
                 android:src="@drawable/ic_autorenew_black_24dp" />
         </RelativeLayout>
         <RelativeLayout
-            android:layout_width="fill_parent"
-            android:layout_height="match_parent"
-            android:layout_weight="9">
+            android:id="@+id/middle"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/top_text"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            app:layout_heightPercent="75%">
 
             <ImageView
                 android:id="@+id/common_video_background"
@@ -71,26 +75,27 @@
                 android:layout_centerHorizontal="true"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true"/>
+            <ImageView
+                android:scaleType="fitXY"
+                android:id="@+id/snap_image"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"/>
             <WebView
                 android:layout_width="70dp"
                 android:layout_height="70dp"
                 android:id="@+id/webView"
+                android:visibility="invisible"
                 android:layout_centerHorizontal="true"
                 android:layout_centerInParent="true"
                 android:layout_centerVertical="true" />
-            <ImageView
-                android:id="@+id/snap_image"
-                android:layout_width="match_parent"
-                android:visibility="invisible"
-                android:layout_height="match_parent"
-                android:src="@drawable/mayuri_shiina" />
         </RelativeLayout>
 
         <HorizontalScrollView
             android:id="@+id/scroll_view"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_weight="1">
+            android:layout_below="@+id/middle"
+            app:layout_heightPercent="16.67%">
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -115,6 +120,7 @@
                     android:src="@drawable/mayuri_shiina"
                     app:civ_border_color="#FFFFFF"
                     app:civ_border_width="0.1dp" />
+
                 <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/button3"
                     android:layout_width="@dimen/button_size_large"
@@ -123,6 +129,7 @@
                     android:src="@drawable/mayuri_shiina"
                     app:civ_border_color="#FFFFFF"
                     app:civ_border_width="0.1dp" />
+
                 <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
                     android:id="@+id/button4"
                     android:layout_width="@dimen/button_size_large"
@@ -131,15 +138,16 @@
                     android:src="@drawable/mayuri_shiina"
                     app:civ_border_color="#FFFFFF"
                     app:civ_border_width="0.1dp" />
-
             </LinearLayout>
         </HorizontalScrollView>
 
+
+
         <ImageView
             android:id="@+id/crack"
-            android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/crack" />
+            android:src="@drawable/crack"
+            android:visibility="invisible"/>
     </android.support.percent.PercentRelativeLayout>
 </android.support.constraint.ConstraintLayout>
