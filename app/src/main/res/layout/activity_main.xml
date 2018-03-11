@@ -8,26 +8,28 @@
     tools:context="com.destress.bdsman.de_stress.MainActivity">
 
     <android.support.percent.PercentRelativeLayout
-        android:orientation="vertical"
+        android:id="@+id/camera_preview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:id="@+id/camera_preview"
-        android:layout_alignParentTop="true">
+        android:layout_alignParentTop="true"
+        android:orientation="vertical">
 
         <LinearLayout
-            android:orientation="horizontal"
             android:id="@+id/top_text"
             android:layout_width="match_parent"
             android:layout_alignParentTop="true"
-            android:padding="@dimen/padding"
+            android:background="@android:color/white"
             android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="@dimen/padding"
             app:layout_heightPercent="8.33%">
+
             <ImageView
+                android:layout_width="@dimen/button_size"
+                android:layout_height="@dimen/button_size"
                 android:padding="@dimen/padding"
                 android:scaleType="centerInside"
-                android:src="@mipmap/ic_launcher"
-                android:layout_width="@dimen/button_size"
-                android:layout_height="@dimen/button_size" />
+                android:src="@mipmap/ic_launcher" />
 
             <TextView
                 android:layout_width="0dp"
@@ -39,15 +41,15 @@
                 android:textSize="20dp" />
         </LinearLayout>
         <SurfaceView
-            android:layout_below="@+id/top_text"
             android:id="@+id/snap_view"
             android:layout_width="match_parent"
-            app:layout_heightPercent="75%"
-            android:layout_weight="1"/>
+            android:layout_below="@+id/top_text"
+            android:layout_weight="1"
+            app:layout_heightPercent="75%"/>
         <FrameLayout
             android:id="@+id/bottom_pane"
-            android:layout_below="@id/snap_view"
             android:layout_width="match_parent"
+            android:layout_below="@id/snap_view"
             android:background="@color/background"
             app:layout_heightPercent="16.67%">
             <RelativeLayout
@@ -58,49 +60,49 @@
                     android:id="@+id/capture_button"
                     android:layout_width="@dimen/button_size"
                     android:layout_height="@dimen/button_size"
-                    app:backgroundTint="@android:color/white"
                     android:layout_centerInParent="true"
-                    app:rippleColor="@android:color/holo_blue_light"
+                    app:backgroundTint="@android:color/white"
                     app:elevation="@dimen/elevation"
+                    app:rippleColor="@android:color/holo_blue_light"
                     app:useCompatPadding="true" />
                 <ImageButton
-                    android:src="@drawable/ic_switch_camera_white_24dp"
                     android:id="@+id/switch_camera_button"
-                    android:background="@null"
-                    android:layout_margin="@dimen/margin"
-                    android:layout_centerVertical="true"
-                    android:layout_alignParentRight="true"
                     android:layout_width="@dimen/button_size"
-                    android:layout_height="@dimen/button_size" />
+                    android:layout_height="@dimen/button_size"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_margin="@dimen/margin"
+                    android:background="@null"
+                    android:src="@drawable/ic_switch_camera_white_24dp" />
             </RelativeLayout>
             <android.support.percent.PercentRelativeLayout
                 android:id="@+id/bottom_pane2"
-                android:visibility="gone"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+                android:visibility="gone">
                 <LinearLayout
                     android:layout_height="match_parent"
-                    app:layout_widthPercent="50%"
                     android:layout_alignParentLeft="true"
-                    android:gravity="center">
+                    android:gravity="center"
+                    app:layout_widthPercent="50%">
                     <ImageButton
                         android:id="@+id/decline_button"
-                        android:background="@null"
-                        android:src="@drawable/ic_close_white_24dp"
                         android:layout_width="@dimen/button_size"
-                        android:layout_height="@dimen/button_size" />
+                        android:layout_height="@dimen/button_size"
+                        android:background="@null"
+                        android:src="@drawable/ic_close_white_24dp" />
                 </LinearLayout>
                 <LinearLayout
-                    android:layout_alignParentRight="true"
                     android:layout_height="match_parent"
-                    app:layout_widthPercent="50%"
-                    android:gravity="center">
+                    android:layout_alignParentRight="true"
+                    android:gravity="center"
+                    app:layout_widthPercent="50%">
                     <ImageButton
                         android:id="@+id/accept_button"
-                        android:background="@null"
-                        android:src="@drawable/ic_check_white_24dp"
                         android:layout_width="@dimen/button_size"
-                        android:layout_height="@dimen/button_size" />
+                        android:layout_height="@dimen/button_size"
+                        android:background="@null"
+                        android:src="@drawable/ic_check_white_24dp" />
                 </LinearLayout>
             </android.support.percent.PercentRelativeLayout>
         </FrameLayout>

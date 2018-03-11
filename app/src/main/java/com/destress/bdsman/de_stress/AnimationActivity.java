@@ -3,9 +3,12 @@ package com.destress.bdsman.de_stress;
 import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.Color;
+import android.graphics.BitmapFactory;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.media.MediaPlayer;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
@@ -15,10 +18,12 @@ import android.view.animation.Animation;
 import android.view.animation.AnimationUtils;
 import android.webkit.WebView;
 import android.widget.HorizontalScrollView;
+import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.VideoView;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
@@ -35,11 +40,14 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
     //Declaration of Package Name
     //Used to retrieve Audio Uri
     public String PACKAGE_NAME;
+    //Health
+    public int health = 100;
     // Shake Animation for snapImage
     Animation snapImageShakeAnimation;
     // Horizontal Scroll Bar for Moves/Actions
     private HorizontalScrollView mScrollView;
     private ImageView mImageView;
+    private ProgressBar mHealthBar;
     //bitmap image for splitting the image
     private Bitmap bitmap;
     private ImageView snapImage;
@@ -57,9 +65,38 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        getWindow().getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_FULLSCREEN);
         setContentView(R.layout.activity_animation);
         mScrollView = findViewById(R.id.scroll_view);
         PACKAGE_NAME = getApplicationContext().getPackageName();
+
+        //Progress Bar added
+        mHealthBar  = findViewById(R.id.health_bar);
+        mHealthBar.setProgress(health);
+
+        //Renew button
+        ImageButton renewButton = findViewById(R.id.renew_button);
+        renewButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                health = 100;
+
+                if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                    mHealthBar.setProgress(health,true);
+                }else{
+                    mHealthBar.setProgress(health);
+                }
+            }
+        });
+
+        //Photo added
+        snapImage = findViewById(R.id.snap_image);
+        String absPath = getIntent().getStringExtra("path");
+        File file = new File(absPath);
+        if(file.exists()){
+            Bitmap bitmap = BitmapFactory.decodeFile(absPath);
+            snapImage.setImageBitmap(bitmap);
+        }
 
         //Audio Player Work Started
         audioPlayer = new MediaPlayer();
@@ -75,7 +112,6 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
         //Audio Player Ended
 
         //Start of Animation Default Declaration
-        snapImage = findViewById(R.id.snap_image);
         snapImageShakeAnimation = AnimationUtils.loadAnimation(this, R.anim.shake);
 
         firstMove = findViewById(R.id.button1);
@@ -87,7 +123,7 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v){
                 findViewById(R.id.crack).setVisibility(View.INVISIBLE);
-                final VideoView videoview = (VideoView) findViewById(R.id.move_video);
+                VideoView videoview = findViewById(R.id.move_video);
                 final ImageView imageView = findViewById(R.id.common_video_background);
                 videoview.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
@@ -128,6 +164,13 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                         }
                         audioPlayer.start();
                         // crack();
+                        int damage = (int) (Math.round(20*Math.random())+40);
+                        health = Math.max(0, health - damage);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            mHealthBar.setProgress(health, true);
+                        }else{
+                            mHealthBar.setProgress(health);
+                        }
                     }
                 });
                 ResizeAnimation resizeAnimation = new ResizeAnimation(
@@ -142,14 +185,14 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                 imageView.startAnimation(resizeAnimationBlack);
                 videoview.start();
                 snapImage.setVisibility(View.INVISIBLE);
-            };
+            }
         });
 
         secondMove.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 findViewById(R.id.crack).setVisibility(View.INVISIBLE);
-                final VideoView videoview = (VideoView) findViewById(R.id.move_video);
+                VideoView videoview = findViewById(R.id.move_video);
                 final ImageView imageView = findViewById(R.id.common_video_background);
                 videoview.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
@@ -164,6 +207,13 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                         snapImage.startAnimation(snapImageShakeAnimation);
                         audioPlayer.start();
                         crack();
+                        int damage = (int) (Math.round(20*Math.random())+40);
+                        health = Math.max(0, health - damage);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            mHealthBar.setProgress(health, true);
+                        }else{
+                            mHealthBar.setProgress(health);
+                        }
                     }
                 });
                 ResizeAnimation resizeAnimation = new ResizeAnimation(
@@ -178,14 +228,14 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                 imageView.startAnimation(resizeAnimationBlack);
                 videoview.start();
                 snapImage.setVisibility(View.INVISIBLE);
-            };
+            }
         });
 
         thirdMove.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 findViewById(R.id.crack).setVisibility(View.INVISIBLE);
-                final VideoView videoview = (VideoView) findViewById(R.id.move_video);
+                VideoView videoview = findViewById(R.id.move_video);
                 final ImageView imageView = findViewById(R.id.common_video_background);
                 videoview.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
@@ -195,11 +245,17 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
                         snapImage.setVisibility(View.VISIBLE);
-                        videoview.setVisibility(View.INVISIBLE);
                         imageView.setVisibility(View.INVISIBLE);
                         snapImage.startAnimation(snapImageShakeAnimation);
                         audioPlayer.start();
                         crack();
+                        int damage = (int) (Math.round(20*Math.random())+40);
+                        health = Math.max(0, health - damage);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            mHealthBar.setProgress(health, true);
+                        }else{
+                            mHealthBar.setProgress(health);
+                        }
                     }
                 });
                 ResizeAnimation resizeAnimation = new ResizeAnimation(
@@ -214,13 +270,14 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                 imageView.startAnimation(resizeAnimationBlack);
                 videoview.start();
                 snapImage.setVisibility(View.INVISIBLE);
-            };
+            }
         });
 
         fourthMove.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View v){
                 findViewById(R.id.crack).setVisibility(View.INVISIBLE);
+                VideoView videoview = findViewById(R.id.move_video);
                 final VideoView videoview = (VideoView) findViewById(R.id.move_video);
                 final ImageView imageView = findViewById(R.id.common_video_background);
                 videoview.setVisibility(View.VISIBLE);
@@ -235,6 +292,13 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                         imageView.setVisibility(View.INVISIBLE);
                         snapImage.startAnimation(snapImageShakeAnimation);
                         audioPlayer.start();
+                        int damage = (int) (Math.round(20*Math.random())+40);
+                        health = Math.max(0, health - damage);
+                        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
+                            mHealthBar.setProgress(health, true);
+                        }else{
+                            mHealthBar.setProgress(health);
+                        }
                         // crack();
                     }
                 });
@@ -250,7 +314,7 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                 imageView.startAnimation(resizeAnimationBlack);
                 videoview.start();
                 snapImage.setVisibility(View.INVISIBLE);
-            };
+            }
         });
         //End of Animation Default Declaration
     }

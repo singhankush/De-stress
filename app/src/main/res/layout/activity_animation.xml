@@ -6,110 +6,140 @@
     android:layout_height="fill_parent"
     tools:context="com.destress.bdsman.de_stress.AnimationActivity">
 
-    <RelativeLayout
+    <android.support.percent.PercentRelativeLayout
+        android:id="@+id/background"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <LinearLayout
-            android:id="@+id/background"
-            android:layout_width="fill_parent"
-            android:layout_height="fill_parent"
-            android:orientation="vertical"
-            android:weightSum="10">
+        <RelativeLayout
+            android:id="@+id/top_text"
+            android:layout_width="match_parent"
+            android:layout_alignParentTop="true"
+            android:background="@android:color/white"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="5dp"
+            app:layout_heightPercent="8.33%">
 
-            <RelativeLayout
-                android:layout_width="fill_parent"
-                android:layout_height="match_parent"
-                android:clipToPadding="false"
-                android:layout_weight="9">
-
-                <ImageView
-                    android:id="@+id/common_video_background"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:visibility="invisible"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"
-                    android:src="@drawable/square" />
-                <VideoView
-                    android:id="@+id/move_video"
-                    android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:visibility="invisible"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true"/>
-                <WebView
-                    android:layout_width="70dp"
-                    android:layout_height="70dp"
-                    android:id="@+id/webView"
-                    android:layout_centerHorizontal="true"
-                    android:layout_centerInParent="true"
-                    android:layout_centerVertical="true" />
-                <ImageView
-                    android:id="@+id/snap_image"
-                    android:layout_width="match_parent"
-                    android:visibility="invisible"
-                    android:layout_height="match_parent"
-                    android:src="@drawable/mayuri_shiina" />
-            </RelativeLayout>
-
-            <HorizontalScrollView
-                android:id="@+id/scroll_view"
-                android:layout_width="match_parent"
+            <TextView
+                android:id="@+id/name_view"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_weight="1">
+                android:layout_alignParentLeft="true"
+                android:layout_centerVertical="true"
+                android:fontFamily="cursive"
+                android:text="BFF"
+                android:textColor="@color/background"
+                android:textSize="20dp" />
 
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:gravity="center"
-                    android:weightSum="4">
+            <ProgressBar
+                android:id="@+id/health_bar"
+                style="?android:attr/progressBarStyleHorizontal"
+                android:layout_width="240dp"
+                android:layout_height="5dp"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/name_view"
+                android:max="100"
+                android:progress="100" />
+            <ImageButton
+                android:id="@+id/renew_button"
+                android:layout_width="@dimen/button_size_large"
+                android:layout_height="@dimen/button_size_large"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:background="@null"
+                android:src="@drawable/ic_autorenew_black_24dp" />
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="9">
 
-                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/button1"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:layout_margin="10dp"
-                        android:src="@drawable/mayuri_shiina"
-                        app:civ_border_color="#FFFFFF"
-                        app:civ_border_width="0.1dp" />
+            <ImageView
+                android:id="@+id/common_video_background"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:visibility="invisible"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/square" />
+            <VideoView
+                android:id="@+id/move_video"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:visibility="invisible"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true"/>
+            <WebView
+                android:layout_width="70dp"
+                android:layout_height="70dp"
+                android:id="@+id/webView"
+                android:layout_centerHorizontal="true"
+                android:layout_centerInParent="true"
+                android:layout_centerVertical="true" />
+            <ImageView
+                android:id="@+id/snap_image"
+                android:layout_width="match_parent"
+                android:visibility="invisible"
+                android:layout_height="match_parent"
+                android:src="@drawable/mayuri_shiina" />
+        </RelativeLayout>
 
-                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/button2"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:layout_margin="10dp"
-                        android:src="@drawable/mayuri_shiina"
-                        app:civ_border_color="#FFFFFF"
-                        app:civ_border_width="0.1dp" />
+        <HorizontalScrollView
+            android:id="@+id/scroll_view"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_weight="1">
 
-                    <de.hdodenhof.circleimageview.CircleImageView
-                        android:id="@+id/button3"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:layout_margin="10dp"
-                        android:src="@drawable/mayuri_shiina"
-                        app:civ_border_color="#FFFFFF"
-                        app:civ_border_width="0.1dp" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:gravity="center"
+                android:weightSum="4">
 
-                    <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
-                        android:id="@+id/button4"
-                        android:layout_width="96dp"
-                        android:layout_height="96dp"
-                        android:layout_margin="10dp"
-                        android:src="@drawable/mayuri_shiina"
-                        app:civ_border_color="#FFFFFF"
-                        app:civ_border_width="0.1dp" />
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/button1"
+                    android:layout_width="@dimen/button_size_large"
+                    android:layout_height="@dimen/button_size_large"
+                    android:layout_margin="@dimen/margin"
+                    android:src="@drawable/mayuri_shiina"
+                    app:civ_border_color="#FFFFFF"
+                    app:civ_border_width="0.1dp" />
 
-                </LinearLayout>
-            </HorizontalScrollView>
-        </LinearLayout>
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/button2"
+                    android:layout_width="@dimen/button_size_large"
+                    android:layout_height="@dimen/button_size_large"
+                    android:layout_margin="@dimen/margin"
+                    android:src="@drawable/mayuri_shiina"
+                    app:civ_border_color="#FFFFFF"
+                    app:civ_border_width="0.1dp" />
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/button3"
+                    android:layout_width="@dimen/button_size_large"
+                    android:layout_height="@dimen/button_size_large"
+                    android:layout_margin="@dimen/margin"
+                    android:src="@drawable/mayuri_shiina"
+                    app:civ_border_color="#FFFFFF"
+                    app:civ_border_width="0.1dp" />
+                <de.hdodenhof.circleimageview.CircleImageView xmlns:app="http://schemas.android.com/apk/res-auto"
+                    android:id="@+id/button4"
+                    android:layout_width="@dimen/button_size_large"
+                    android:layout_height="@dimen/button_size_large"
+                    android:layout_margin="@dimen/margin"
+                    android:src="@drawable/mayuri_shiina"
+                    app:civ_border_color="#FFFFFF"
+                    app:civ_border_width="0.1dp" />
+
+            </LinearLayout>
+        </HorizontalScrollView>
+
         <ImageView
             android:id="@+id/crack"
             android:visibility="invisible"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:src="@drawable/crack"/>
-    </RelativeLayout>
+            android:src="@drawable/crack" />
+    </android.support.percent.PercentRelativeLayout>
 </android.support.constraint.ConstraintLayout>

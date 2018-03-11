@@ -1,42 +1,36 @@
 package com.destress.bdsman.de_stress;
 
-import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Matrix;
 import android.hardware.Camera;
-import android.media.Image;
+import android.os.Bundle;
 import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
-import android.view.Surface;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.Button;
-import android.widget.FrameLayout;
-import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
-import static android.provider.MediaStore.Files.FileColumns.MEDIA_TYPE_IMAGE;
-
 public class MainActivity extends AppCompatActivity {
     private static final int STATE_READY=1;
     private static final int STATE_FROZEN=0;
-
+    public Bitmap capturedImage;
+    public int state=STATE_READY;
+    public SurfaceHolder.Callback mHolderCallback;
+    public Camera.PictureCallback mCameraCallback;
+    public View bottomPane1, bottomPane2;
+    public int currentCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
     private SurfaceView mSnapView;
     private SurfaceHolder mHolder;
     private Camera mCamera;
@@ -44,12 +38,7 @@ public class MainActivity extends AppCompatActivity {
     private ImageButton mSwitchButton;
     private ImageButton mAcceptButton;
     private ImageButton mDeclineButton;
-    public Bitmap capturedImage;
-    public int state=STATE_READY;
-    public SurfaceHolder.Callback mHolderCallback;
-    public Camera.PictureCallback mCameraCallback;
-    public View bottomPane1, bottomPane2;
-    public int currentCameraId = Camera.CameraInfo.CAMERA_FACING_BACK;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -134,7 +123,7 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 if(capturedImage != null) {
                     ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                    capturedImage.compress(Bitmap.CompressFormat.PNG, 0, baos);
+                    capturedImage.compress(Bitmap.CompressFormat.PNG, 100, baos);
                     File file = getOutputMediaFile();
                     if (file == null) return;
                     try {
@@ -163,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
                     }
                 }
                 String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-                return new File(dir + File.separator + "IMG_" + timeStamp + ".png");
+                return new File(dir + File.separator + "IMG_" + timeStamp + ".jpeg");
             }
         });
         mDeclineButton.setOnClickListener(new View.OnClickListener() {
@@ -196,13 +185,15 @@ public class MainActivity extends AppCompatActivity {
             mCamera.setDisplayOrientation(90);
             Camera.Parameters parameters = mCamera.getParameters();
             parameters.setFocusMode(Camera.Parameters.FOCUS_MODE_AUTO);
+            parameters.setSceneMode(Camera.Parameters.SCENE_MODE_AUTO);
+            parameters.setWhiteBalance(Camera.Parameters.WHITE_BALANCE_AUTO);
+            parameters.setExposureCompensation(0);
             mCamera.setParameters(parameters);
             mCamera.startPreview();
         }
     }
     private boolean checkCameraHardware(){
-        if(getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA)) return true;
-        return false;
+        return getPackageManager().hasSystemFeature(PackageManager.FEATURE_CAMERA);
     }
 
     public Camera getCameraInstance(){
