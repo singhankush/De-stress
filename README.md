@@ -15,7 +15,7 @@ Made this app for [code.fun.do](https://www.acadaccelerator.com/) an on-campus 2
   - decrease in HP
 - Export image
 - Media assets
-  - attack cutscenes
+  - ~~attack cutscenes~~
   - damage overlay
   - damage bgm
   - icon for moveset buttons
