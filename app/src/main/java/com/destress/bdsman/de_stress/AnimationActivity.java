@@ -84,19 +84,33 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v){
                 findViewById(R.id.crack).setVisibility(View.INVISIBLE);
-                VideoView videoview = (VideoView) findViewById(R.id.move_video);
+                final VideoView videoview = (VideoView) findViewById(R.id.move_video);
+                final ImageView imageView = findViewById(R.id.common_video_background);
                 videoview.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.VISIBLE);
                 Uri uri = convertIdToUri(R.raw.scene_explosion);
                 videoview.setVideoURI(uri);
                 videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
                         snapImage.setVisibility(View.VISIBLE);
+                        videoview.setVisibility(View.INVISIBLE);
+                        imageView.setVisibility(View.INVISIBLE);
                         snapImage.startAnimation(snapImageShakeAnimation);
                         audioPlayer.start();
                         crack();
                     }
                 });
+                ResizeAnimation resizeAnimation = new ResizeAnimation(
+                        videoview, 800, 200, 1000, 500
+                );
+                ResizeAnimation resizeAnimationBlack = new ResizeAnimation(
+                        imageView, 1500, 800, 2000, 2000
+                );
+                resizeAnimation.setDuration(10000);
+                resizeAnimationBlack.setDuration(10000);
+                videoview.startAnimation(resizeAnimation);
+                imageView.startAnimation(resizeAnimationBlack);
                 videoview.start();
                 snapImage.setVisibility(View.INVISIBLE);
             };
@@ -106,8 +120,8 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v){
                 findViewById(R.id.crack).setVisibility(View.INVISIBLE);
-                VideoView videoview = (VideoView) findViewById(R.id.move_video);
-                ImageView imageView = findViewById(R.id.common_video_background);
+                final VideoView videoview = (VideoView) findViewById(R.id.move_video);
+                final ImageView imageView = findViewById(R.id.common_video_background);
                 videoview.setVisibility(View.VISIBLE);
                 imageView.setVisibility(View.VISIBLE);
                 Uri uri = convertIdToUri(R.raw.scene_kamehameha);
@@ -116,19 +130,21 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
                         snapImage.setVisibility(View.VISIBLE);
+                        videoview.setVisibility(View.INVISIBLE);
+                        imageView.setVisibility(View.INVISIBLE);
                         snapImage.startAnimation(snapImageShakeAnimation);
                         audioPlayer.start();
                         crack();
                     }
                 });
                 ResizeAnimation resizeAnimation = new ResizeAnimation(
-                        videoview, 400, 600, 1000, 2000
+                        videoview, 800, 200, 1000, 500
                 );
                 ResizeAnimation resizeAnimationBlack = new ResizeAnimation(
-                        imageView, 2000, 600, 2000, 2000
+                        imageView, 1500, 800, 2000, 2000
                 );
-                resizeAnimation.setDuration(5000);
-                resizeAnimationBlack.setDuration(5000);
+                resizeAnimation.setDuration(10000);
+                resizeAnimationBlack.setDuration(10000);
                 videoview.startAnimation(resizeAnimation);
                 imageView.startAnimation(resizeAnimationBlack);
                 videoview.start();
@@ -176,19 +192,33 @@ public class AnimationActivity extends AppCompatActivity implements View.OnClick
             @Override
             public void onClick(View v){
                 findViewById(R.id.crack).setVisibility(View.INVISIBLE);
-                VideoView videoview = (VideoView) findViewById(R.id.move_video);
+                final VideoView videoview = (VideoView) findViewById(R.id.move_video);
+                final ImageView imageView = findViewById(R.id.common_video_background);
                 videoview.setVisibility(View.VISIBLE);
+                imageView.setVisibility(View.VISIBLE);
                 Uri uri = convertIdToUri(R.raw.scene_explosion);
                 videoview.setVideoURI(uri);
                 videoview.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
                     @Override
                     public void onCompletion(MediaPlayer mediaPlayer) {
                         snapImage.setVisibility(View.VISIBLE);
+                        videoview.setVisibility(View.INVISIBLE);
+                        imageView.setVisibility(View.INVISIBLE);
                         snapImage.startAnimation(snapImageShakeAnimation);
                         audioPlayer.start();
                         crack();
                     }
                 });
+                ResizeAnimation resizeAnimation = new ResizeAnimation(
+                        videoview, 800, 200, 1000, 500
+                );
+                ResizeAnimation resizeAnimationBlack = new ResizeAnimation(
+                        imageView, 1500, 800, 2000, 2000
+                );
+                resizeAnimation.setDuration(10000);
+                resizeAnimationBlack.setDuration(10000);
+                videoview.startAnimation(resizeAnimation);
+                imageView.startAnimation(resizeAnimationBlack);
                 videoview.start();
                 snapImage.setVisibility(View.INVISIBLE);
             };
